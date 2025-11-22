@@ -3,136 +3,162 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-
-<title>Gốm Thời Trần</title>
-
-<!-- model-viewer -->
-<script type="module" 
-src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+<title>Bình Thời Trần – Web 3D</title>
+<script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
 
 <style>
-    body {
-        margin: 0;
-        font-family: "Georgia", serif;
-        background: url("https://i.imgur.com/n1qSg7E.jpeg"); /* texture giấy dó */
-        background-size: cover;
-        color: #3b2f2f;
-    }
+:root {
+    --gap: 20px;
+    --maxw: 1100px;
+}
 
-    /* Thanh menu dạng tab gỗ */
-    .nav {
-        display: flex;
-        justify-content: center;
-        gap: 20px;
-        background: #6d4c41;
-        padding: 12px 0;
-        border-bottom: 6px solid #4e342e;
-    }
+/* BODY */
+body {
+    margin: 0;
+    font-family: "Georgia", serif;
+    background-color: #f5e6d8; /* màu nâu đất nhạt */
+    color: #3b2f2f;
+}
 
-    .nav button {
-        background: #d7ccc8;
-        border: 2px solid #5d4037;
-        padding: 10px 18px;
-        font-size: 17px;
-        cursor: pointer;
-        transition: 0.25s;
-        border-radius: 6px;
-        font-weight: bold;
-    }
+/* NAV – menu cổ điển */
+.nav {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    background: #6d4c41;
+    padding: 12px 0;
+    flex-wrap: wrap;
+    border-bottom: 5px solid #4e342e;
+}
+.nav button {
+    background: #d7ccc8;
+    border: 2px solid #5d4037;
+    padding: 10px 18px;
+    font-weight: bold;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: .25s;
+}
+.nav button:hover { background: #efebe9; }
 
-    .nav button:hover {
-        background: #efebe9;
-    }
+/* SECTIONS */
+section {
+    display: none;
+    max-width: var(--maxw);
+    margin: 20px auto;
+    padding: 30px 16px;
+    animation: fadeSlide 0.4s ease;
+}
+section.active { display: block; }
 
-    section {
-        display: none;
-        padding: 40px;
-        animation: fadeSlide 0.5s ease;
-    }
+@keyframes fadeSlide {
+    from { opacity: 0; transform: translateX(-30px); }
+    to { opacity: 1; transform: translateX(0); }
+}
 
-    @keyframes fadeSlide {
-        from { opacity: 0; transform: translateX(-40px); }
-        to   { opacity: 1; transform: translateX(0); }
-    }
+/* MODEL VIEWER khung gỗ */
+.wood-frame {
+    border: 12px solid #5d4037;
+    padding: 8px;
+    border-radius: 6px;
+    background: #bcaaa4;
+    max-width: 400px;
+    margin: 20px auto;
+    box-shadow: 0 8px 16px rgba(0,0,0,.3);
+}
+model-viewer {
+    width: 100%;
+    height: 400px;
+    border-radius: 6px;
+}
 
-    /* Khung gỗ bao model */
-    .wood-frame {
-        border: 14px solid #5d4037;
-        padding: 10px;
-        background: #bcaaa4;
-        width: 360px;
-        margin: auto;
-        border-radius: 4px;
-        box-shadow: 0 0 10px rgba(0,0,0,0.4);
-    }
+/* THÔNG TIN CARD */
+.card {
+    background: rgba(255,255,255,0.85);
+    padding: 22px;
+    border-radius: 12px;
+    box-shadow: 0 6px 16px rgba(0,0,0,.15);
+    line-height: 1.6;
+    max-width: 800px;
+    margin: 20px auto;
+}
 
-    h1 {
-        text-align: center;
-        font-size: 34px;
-        margin-bottom: 20px;
-        text-transform: uppercase;
-        letter-spacing: 2px;
-        color: #4e342e;
-    }
+/* POSTER BOX */
+.poster-box {
+    width: 90%;
+    max-width: 600px;
+    margin: 20px auto;
+    border: 2px dashed #5d4037;
+    padding: 40px;
+    text-align: center;
+    background: rgba(255,255,255,0.6);
+    border-radius: 10px;
+}
 
-    .poster-box {
-        width: 90%;
-        max-width: 600px;
-        margin: auto;
-        border: 2px dashed #5d4037;
-        padding: 40px;
-        text-align: center;
-        background: rgba(255,255,255,0.6);
-        border-radius: 10px;
-    }
+/* H1 STYLE */
+h1 {
+    text-align: center;
+    font-size: 32px;
+    margin-bottom: 20px;
+    color: #4e342e;
+    text-transform: uppercase;
+}
+
+/* MOBILE OPTIMIZED */
+@media (max-width:900px){
+    .wood-frame { max-width: 100%; }
+    model-viewer { height: 300px; }
+    section { padding: 20px 10px; }
+}
+@media (max-width:600px){
+    .nav { flex-direction: column; gap: 10px; }
+    .nav button { width: 90%; font-size: 16px; }
+    model-viewer { height: 250px; }
+}
 </style>
 </head>
 
 <body>
 
+<!-- NAVIGATION -->
 <div class="nav">
     <button onclick="showPage(1)">Bình 3D</button>
     <button onclick="showPage(2)">Thông tin</button>
     <button onclick="showPage(3)">Poster</button>
 </div>
 
-<!-- PAGE 1: MODEL 3D -->
+<!-- SECTION 1 – MODEL 3D -->
 <section id="page1">
-    <h1>Bình Gốm Thời Trần</h1>
-
+    <h1>Bình Thời Trần</h1>
     <div class="wood-frame">
-        <model-viewer src="binh_tran.glb"
-        camera-controls auto-rotate shadow-intensity="1" 
-        style="width:100%; height:380px;">
-        </model-viewer>
+        <model-viewer src="https://huggingface.co/SangLazyGuy/dogom3D/resolve/main/binhthoitran.glb"
+        camera-controls auto-rotate ar ar-modes="webxr scene-viewer quick-look"></model-viewer>
     </div>
 </section>
 
-<!-- PAGE 2: INFO -->
+<!-- SECTION 2 – THÔNG TIN -->
 <section id="page2">
-    <h1>Thông Tin Gốm Thời Trần</h1>
-
-    <p style="font-size:18px; max-width:800px; margin:auto; line-height:1.6;">
-        Gốm thời Trần (1225–1400) nổi bật với đường nét mạnh mẽ, dáng bình cao 
-        khỏe, hoa văn khắc chạm sâu, và màu men nâu – trắng đặc trưng. 
-        Các bình thời Trần thường thể hiện phong cách thực dụng nhưng vẫn có 
-        giá trị mỹ thuật cao, chú trọng độ bền và tính ứng dụng trong đời sống.
-    </p>
+    <h1>Thông tin Bình Thời Trần</h1>
+    <div class="card">
+        <p>Bình gốm thời Trần nổi bật với men nâu đặc trưng, xương gốm dày và chắc, hoa văn khắc sâu, phóng khoáng, khỏe mạnh.</p>
+        <p>Thường trang trí hình sen, dây lá, cảnh sinh hoạt, thể hiện tính thực dụng nhưng vẫn có giá trị mỹ thuật cao.</p>
+        <p class="muted">Kích thước chuẩn khảo cổ: cao ~25 cm – miệng 8 cm.</p>
+    </div>
 </section>
 
-<!-- PAGE 3: POSTER -->
+<!-- SECTION 3 – POSTER -->
 <section id="page3">
-    <h1>Khu Vực Dán Poster</h1>
-
+    <h1>Khu vực Poster</h1>
     <div class="poster-box">
-        <p>Thả hoặc chèn ảnh poster tại đây.</p>
+        <p>Chèn ảnh poster tại đây.</p>
     </div>
 </section>
 
 <script>
-function showPage(id) {
-    document.querySelectorAll("section").forEach(sec => sec.style.display = "none");
-    document.getElementById("page" + id).style.display = "block";
+function showPage(id){
+    document.querySelectorAll("section").forEach(sec => sec.classList.remove("active"));
+    document.getElementById("page"+id).classList.add("active");
+    window.scrollTo({top:0, behavior:'smooth'});
 }
 showPage(1);
 </script>
